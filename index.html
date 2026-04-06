@@ -915,8 +915,6 @@ async function submitForm(type) {
       email:        document.getElementById("p-em").value.trim(),
       phone:        document.getElementById("p-ph").value.trim(),
       pricingPlan:  activePkg==="6" ? "6-Item Package ($275)" : "Individual ($70/item)",
-      estBoxes:     activePkg==="6"   ? (document.getElementById("p-bx").value||"—") : "—",
-      estFurniture: activePkg==="6"   ? (document.getElementById("p-fu").value||"—") : "—",
       estItems:     activePkg==="ind" ? (document.getElementById("p-ind-items").value||"—") : "—",
       pickupDate: selPDate, timeSlot: selPSlot,
       dorm:  document.getElementById("p-dorm").value,
