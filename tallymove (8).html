@@ -1,0 +1,994 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width,initial-scale=1.0"/>
+<title>TallyMove  to  Student Storage & Moving · FSU</title>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,wght@0,400;0,700;0,900;1,400&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet"/>
+<style>
+:root{
+  --y-light:#fff7d6;--y-mid:#ffd84d;--y-deep:#f5a800;--y-dark:#c47a00;
+  --black:#1a1209;--soft:#fdf6e3;--gtxt:#5a4a1e;--white:#ffffff;
+  --sh:0 4px 24px rgba(196,122,0,.13);--r:16px;
+}
+*{box-sizing:border-box;margin:0;padding:0;}
+html{scroll-behavior:smooth;}
+body{font-family:'DM Sans',sans-serif;background:var(--y-light);color:var(--black);}
+
+/* NAV */
+nav{position:sticky;top:0;z-index:100;background:rgba(255,247,214,.95);backdrop-filter:blur(14px);
+  border-bottom:1.5px solid var(--y-mid);display:flex;align-items:center;
+  justify-content:space-between;padding:0 5%;height:66px;}
+.logo{font-family:'Fraunces',serif;font-weight:900;font-size:1.55rem;letter-spacing:-.5px;}
+.logo span{color:var(--y-dark);}
+.nav-links{display:flex;gap:26px;list-style:none;}
+.nav-links a{font-size:.88rem;font-weight:500;color:var(--gtxt);text-decoration:none;transition:color .2s;}
+.nav-links a:hover{color:var(--y-dark);}
+.nav-cta{background:var(--black);color:var(--y-mid);border:none;padding:10px 24px;border-radius:50px;
+  font-family:'DM Sans',sans-serif;font-weight:600;font-size:.88rem;cursor:pointer;
+  transition:background .2s,transform .15s;text-decoration:none;display:inline-block;}
+.nav-cta:hover{background:#2e200a;transform:translateY(-1px);}
+
+/* HERO */
+.hero{min-height:90vh;display:flex;align-items:center;justify-content:center;text-align:center;
+  padding:90px 5% 70px;background:radial-gradient(ellipse 80% 60% at 50% 0%,#ffe680,#fff7d6 70%);
+  position:relative;overflow:hidden;}
+.hero::before{content:'';position:absolute;width:700px;height:700px;border-radius:50%;
+  background:radial-gradient(circle,#ffd84d33,transparent 70%);top:-250px;left:-180px;pointer-events:none;}
+.hero::after{content:'';position:absolute;width:400px;height:400px;border-radius:50%;
+  background:radial-gradient(circle,#f5a80022,transparent 70%);bottom:-80px;right:-80px;pointer-events:none;}
+.hero-inner{max-width:800px;position:relative;z-index:1;}
+.badge{display:inline-block;background:var(--y-mid);color:var(--black);font-size:.77rem;font-weight:700;
+  letter-spacing:.09em;text-transform:uppercase;padding:6px 18px;border-radius:50px;
+  margin-bottom:26px;border:1.5px solid var(--y-deep);animation:fadeUp .6s ease both;}
+.hero h1{font-family:'Fraunces',serif;font-size:clamp(2.8rem,6.5vw,5.2rem);font-weight:900;line-height:1.07;
+  letter-spacing:-1.5px;margin-bottom:22px;animation:fadeUp .7s .1s ease both;}
+.hero h1 em{font-style:italic;color:var(--y-dark);}
+.hero-sub{font-size:1.08rem;color:var(--gtxt);max-width:530px;margin:0 auto 38px;line-height:1.7;
+  animation:fadeUp .7s .2s ease both;}
+.hero-actions{display:flex;gap:14px;justify-content:center;flex-wrap:wrap;animation:fadeUp .7s .3s ease both;}
+.btn-p{background:var(--black);color:var(--y-mid);border:none;padding:15px 36px;border-radius:50px;
+  font-family:'DM Sans',sans-serif;font-size:1rem;font-weight:700;cursor:pointer;
+  box-shadow:0 4px 22px rgba(26,18,9,.2);text-decoration:none;display:inline-block;
+  transition:background .2s,transform .15s,box-shadow .2s;}
+.btn-p:hover{background:#2e200a;transform:translateY(-2px);box-shadow:0 8px 30px rgba(26,18,9,.25);}
+.btn-o{background:transparent;color:var(--black);border:2px solid var(--y-deep);padding:13px 28px;
+  border-radius:50px;font-family:'DM Sans',sans-serif;font-size:1rem;font-weight:600;cursor:pointer;
+  text-decoration:none;display:inline-block;transition:background .2s,transform .15s;}
+.btn-o:hover{background:var(--y-mid);transform:translateY(-2px);}
+
+/* SECTIONS */
+.section{padding:86px 5%;max-width:1120px;margin:0 auto;}
+.sec-label{font-size:.77rem;font-weight:700;letter-spacing:.11em;text-transform:uppercase;
+  color:var(--y-dark);margin-bottom:10px;}
+.sec-title{font-family:'Fraunces',serif;font-size:clamp(1.9rem,4vw,3rem);font-weight:800;
+  letter-spacing:-.5px;line-height:1.15;margin-bottom:50px;}
+
+/* HOW IT WORKS */
+.steps-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:20px;}
+.step-card{background:var(--white);border-radius:var(--r);padding:28px 22px;
+  border:1.5px solid #ffe8a0;box-shadow:var(--sh);transition:transform .22s,box-shadow .22s;
+  position:relative;}
+.step-card:hover{transform:translateY(-5px);box-shadow:0 12px 40px rgba(196,122,0,.18);}
+.step-num{font-family:'Fraunces',serif;font-size:2.6rem;font-weight:900;color:var(--y-mid);
+  line-height:1;margin-bottom:12px;}
+.step-card h3{font-size:.97rem;font-weight:700;margin-bottom:8px;color:var(--black);}
+.step-card p{font-size:.85rem;color:var(--gtxt);line-height:1.65;}
+.step-card .tag{display:inline-block;background:var(--y-light);color:var(--y-dark);
+  font-size:.71rem;font-weight:700;letter-spacing:.07em;text-transform:uppercase;
+  padding:3px 10px;border-radius:50px;border:1px solid var(--y-mid);margin-bottom:10px;}
+
+/* PRICING */
+.pricing-wrap{background:var(--black);padding:86px 5%;}
+.pricing-inner{max-width:1120px;margin:0 auto;}
+.pricing-wrap .sec-label{color:var(--y-mid);}
+.pricing-wrap .sec-title{color:var(--white);}
+.pricing-grid{display:grid;grid-template-columns:1fr 1fr;gap:22px;max-width:820px;}
+.pc{background:#1f140a;border:1.5px solid #3a2510;border-radius:20px;padding:32px 28px;
+  transition:transform .2s,border-color .2s;position:relative;}
+.pc:hover{transform:translateY(-4px);border-color:var(--y-mid);}
+.pc.feat{border-color:var(--y-mid);background:#291900;}
+.pc.feat::before{content:'Most Popular';position:absolute;top:-13px;left:28px;
+  background:var(--y-mid);color:var(--black);font-size:.71rem;font-weight:700;
+  letter-spacing:.07em;text-transform:uppercase;padding:4px 14px;border-radius:50px;}
+.pc-icon{font-size:2.4rem;margin-bottom:14px;display:block;}
+.pc h3{font-weight:700;color:var(--white);margin-bottom:8px;font-size:1.05rem;}
+.pc-amt{font-family:'Fraunces',serif;font-size:3rem;font-weight:900;color:var(--y-mid);
+  line-height:1;margin:10px 0 6px;display:block;}
+.pc-amt small{font-size:1rem;font-weight:400;color:#9a8050;}
+.pc-desc{font-size:.85rem;color:#9a8050;line-height:1.65;margin-top:10px;}
+.pc-note{font-size:.8rem;color:var(--y-mid);margin-top:14px;font-weight:600;
+  background:rgba(255,216,77,.08);padding:8px 12px;border-radius:8px;border-left:2px solid var(--y-mid);}
+
+/* CONTACT */
+.contact-wrap{background:var(--y-light);padding:86px 5%;}
+.contact-inner{max-width:900px;margin:0 auto;}
+.contact-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:20px;margin-top:0;}
+.contact-card{background:var(--white);border:1.5px solid #ffe8a0;border-radius:var(--r);
+  padding:28px 24px;text-align:center;box-shadow:var(--sh);transition:transform .2s,box-shadow .2s;}
+.contact-card:hover{transform:translateY(-4px);box-shadow:0 12px 36px rgba(196,122,0,.18);}
+.cc-icon{font-size:2rem;margin-bottom:12px;display:block;}
+.contact-card h3{font-size:.95rem;font-weight:700;margin-bottom:6px;}
+.contact-card a{color:var(--y-dark);text-decoration:none;font-weight:600;font-size:.92rem;
+  word-break:break-all;}
+.contact-card a:hover{text-decoration:underline;}
+.contact-card p{font-size:.83rem;color:var(--gtxt);margin-top:4px;}
+
+/* BOOKING */
+.booking-wrap{background:radial-gradient(ellipse 100% 80% at 50% 100%,#ffe680,#fff7d6 60%);padding:86px 5%;}
+.booking-inner{max-width:820px;margin:0 auto;}
+.form-card{background:var(--white);border-radius:26px;border:1.5px solid #ffe8a0;
+  box-shadow:0 10px 52px rgba(196,122,0,.13);overflow:hidden;}
+.tabs{display:grid;grid-template-columns:1fr 1fr;border-bottom:1.5px solid #ffe8a0;}
+.tab{padding:18px;text-align:center;font-weight:600;font-size:.9rem;cursor:pointer;
+  color:var(--gtxt);background:var(--soft);transition:background .2s;border:none;
+  font-family:'DM Sans',sans-serif;}
+.tab.active{background:var(--white);color:var(--black);border-bottom:3px solid var(--y-deep);}
+.fbody{padding:36px;}
+.fstep{display:none;}.fstep.active{display:block;}
+.frow{display:grid;grid-template-columns:1fr 1fr;gap:15px;margin-bottom:16px;}
+.frow.one{grid-template-columns:1fr;}
+.frow.three{grid-template-columns:1fr 1fr 1fr;}
+.fld{display:flex;flex-direction:column;gap:6px;}
+.fld label{font-size:.81rem;font-weight:700;color:var(--gtxt);letter-spacing:.01em;}
+.fld input,.fld select,.fld textarea{
+  padding:11px 14px;border:1.5px solid #e8d89a;border-radius:10px;
+  font-family:'DM Sans',sans-serif;font-size:.9rem;color:var(--black);background:var(--soft);
+  outline:none;transition:border-color .2s,box-shadow .2s;-webkit-appearance:none;appearance:none;}
+.fld input:focus,.fld select:focus,.fld textarea:focus{
+  border-color:var(--y-deep);box-shadow:0 0 0 3px rgba(245,168,0,.13);background:#fff;}
+.fld select{background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8'%3E%3Cpath fill='%23c47a00' d='M6 8L0 0h12z'/%3E%3C/svg%3E");
+  background-repeat:no-repeat;background-position:right 14px center;padding-right:36px;}
+
+/* Pricing toggle */
+.pkg-toggle{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:16px;}
+.pkg-btn{padding:16px 12px;border:2px solid #e8d89a;border-radius:12px;background:var(--soft);
+  font-family:'DM Sans',sans-serif;font-size:.88rem;font-weight:600;color:var(--gtxt);
+  cursor:pointer;transition:all .2s;text-align:center;}
+.pkg-btn:hover{border-color:var(--y-deep);background:#fffae6;}
+.pkg-btn.sel{border-color:var(--black);background:var(--black);color:var(--y-mid);}
+.pkg-btn .pkg-price{display:block;font-family:'Fraunces',serif;font-size:1.5rem;font-weight:900;
+  color:var(--y-dark);margin-bottom:2px;}
+.pkg-btn.sel .pkg-price{color:var(--y-mid);}
+.pkg-btn .pkg-label{display:block;font-size:.77rem;opacity:.8;}
+.pkg-detail{background:var(--soft);border:1.5px solid #ffe8a0;border-radius:12px;
+  padding:14px 16px;margin-bottom:16px;font-size:.84rem;color:var(--gtxt);line-height:1.6;}
+.pkg-detail strong{color:var(--black);}
+.pkg-detail .warn{color:var(--y-dark);font-weight:600;}
+.ind-fields{display:none;}
+.ind-fields.show{display:block;}
+
+/* Date/slot */
+.date-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin-top:6px;}
+.date-grid.aug{grid-template-columns:repeat(3,1fr);}
+.dbt{padding:11px 6px;border:1.5px solid #e8d89a;border-radius:10px;background:var(--soft);
+  font-family:'DM Sans',sans-serif;font-size:.82rem;font-weight:600;color:var(--gtxt);
+  cursor:pointer;transition:all .2s;text-align:center;line-height:1.3;}
+.dbt:hover{border-color:var(--y-deep);background:#fffae6;}
+.dbt.sel{border-color:var(--black);background:var(--black);color:var(--y-mid);}
+.dbt-day{display:block;font-size:.68rem;font-weight:400;opacity:.65;margin-bottom:2px;}
+.slot-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin-top:6px;}
+.slot{padding:13px 6px;border:1.5px solid #e8d89a;border-radius:10px;background:var(--soft);
+  font-family:'DM Sans',sans-serif;font-size:.82rem;font-weight:600;color:var(--gtxt);
+  cursor:pointer;transition:all .2s;text-align:center;line-height:1.4;}
+.slot:hover{border-color:var(--y-deep);background:#fffae6;}
+.slot.sel{border-color:var(--black);background:var(--black);color:var(--y-mid);}
+.slot.full{opacity:.38;cursor:not-allowed;}
+.slot-time{display:block;font-size:.75rem;font-weight:400;margin-top:2px;}
+.slot-cap{display:block;font-size:.7rem;margin-top:3px;}
+.cap-ok{color:#2e9e2e;}.cap-warn{color:#c47a00;}.cap-full{color:#cc3030;}
+
+/* Progress */
+.prog{display:flex;align-items:center;gap:5px;margin-bottom:28px;}
+.ps{display:flex;align-items:center;gap:5px;font-size:.77rem;font-weight:600;color:#c8b070;white-space:nowrap;}
+.ps.active{color:var(--black);}.ps.done{color:var(--black);}
+.pd{width:24px;height:24px;border-radius:50%;background:#f0e4b0;display:flex;align-items:center;
+  justify-content:center;font-size:.68rem;font-weight:700;color:#c8b070;border:1.5px solid #e8d89a;flex-shrink:0;}
+.ps.active .pd{background:var(--y-mid);color:var(--black);border-color:var(--y-deep);}
+.ps.done .pd{background:var(--black);color:var(--y-mid);border-color:var(--black);}
+.pl{flex:1;height:2px;background:#e8d89a;border-radius:2px;min-width:8px;}
+.pl.done{background:var(--black);}
+
+/* Divider / tags */
+.divider{border:none;border-top:1.5px solid #f0e4b0;margin:24px 0;}
+.sec-tag{font-size:.76rem;font-weight:700;letter-spacing:.1em;text-transform:uppercase;
+  color:var(--y-dark);margin-bottom:13px;}
+
+/* Buttons */
+.next-btn{display:inline-flex;align-items:center;gap:6px;padding:13px 28px;
+  background:var(--y-mid);color:var(--black);border:none;border-radius:50px;
+  font-family:'DM Sans',sans-serif;font-size:.91rem;font-weight:700;cursor:pointer;
+  transition:background .2s,transform .15s;margin-top:20px;}
+.next-btn:hover{background:var(--y-deep);transform:translateY(-1px);}
+.back-btn{display:inline-flex;align-items:center;gap:5px;padding:12px 20px;
+  background:transparent;color:var(--gtxt);border:1.5px solid #e8d89a;border-radius:50px;
+  font-family:'DM Sans',sans-serif;font-size:.87rem;font-weight:600;cursor:pointer;
+  margin-top:20px;margin-right:8px;transition:background .2s;}
+.back-btn:hover{background:#f5ecc8;}
+.sub-btn{width:100%;padding:16px;background:var(--black);color:var(--y-mid);border:none;
+  border-radius:13px;font-family:'DM Sans',sans-serif;font-size:1rem;font-weight:700;
+  cursor:pointer;margin-top:10px;transition:background .2s,transform .15s;letter-spacing:.01em;}
+.sub-btn:hover{background:#2e200a;transform:translateY(-1px);}
+.sub-btn:disabled{opacity:.5;cursor:not-allowed;transform:none;}
+.fnote{font-size:.77rem;color:var(--gtxt);text-align:center;margin-top:14px;line-height:1.5;}
+
+/* Success */
+.success-box{text-align:center;padding:52px 36px;display:none;}
+.success-box.show{display:block;}
+.success-box .ico{font-size:3.8rem;margin-bottom:16px;}
+.success-box h3{font-family:'Fraunces',serif;font-size:1.9rem;font-weight:800;margin-bottom:10px;}
+.success-box p{color:var(--gtxt);font-size:.92rem;line-height:1.65;}
+
+/* Spinner */
+.spinner{display:inline-block;width:18px;height:18px;border:2.5px solid var(--y-mid);
+  border-top-color:transparent;border-radius:50%;animation:spin .7s linear infinite;vertical-align:middle;margin-right:6px;}
+@keyframes spin{to{transform:rotate(360deg)}}
+
+/* Error banner */
+.err-banner{background:#ffeded;border:1.5px solid #f5c0c0;border-radius:10px;
+  padding:12px 16px;font-size:.84rem;color:#b00;margin-top:12px;display:none;}
+.err-banner.show{display:block;}
+
+footer{background:var(--black);color:#a89060;text-align:center;padding:40px 5%;font-size:.85rem;}
+footer strong{color:var(--y-mid);font-family:'Fraunces',serif;font-weight:800;}
+footer .footer-links{display:flex;justify-content:center;gap:28px;margin-top:14px;flex-wrap:wrap;}
+footer .footer-links a{color:#a89060;text-decoration:none;font-size:.82rem;transition:color .2s;}
+footer .footer-links a:hover{color:var(--y-mid);}
+
+@keyframes fadeUp{from{opacity:0;transform:translateY(18px)}to{opacity:1;transform:translateY(0)}}
+@media(max-width:660px){
+  .frow,.frow.three{grid-template-columns:1fr;}
+  .date-grid,.date-grid.aug{grid-template-columns:repeat(2,1fr);}
+  .slot-grid{grid-template-columns:1fr;}
+  .nav-links{display:none;}
+  .fbody{padding:22px 18px;}
+  .pricing-grid{grid-template-columns:1fr;}
+  .pkg-toggle{grid-template-columns:1fr;}
+}
+
+/* Box addon checkbox */
+.box-addon { margin-bottom:4px; }
+.box-check-label {
+  display:flex; align-items:flex-start; gap:12px; cursor:pointer;
+  background:var(--soft); border:1.5px solid #ffe8a0; border-radius:12px;
+  padding:16px; transition:border-color .2s, background .2s;
+}
+.box-check-label:hover { border-color:var(--y-deep); background:#fffae6; }
+.box-check-label input[type="checkbox"] {
+  width:18px; height:18px; margin-top:3px; flex-shrink:0; cursor:pointer;
+  accent-color:var(--black);
+}
+.box-check-label input[type="checkbox"]:checked ~ .box-check-content { color:var(--black); }
+.box-check-label:has(input:checked) { border-color:var(--black); background:#fffae6; }
+.box-check-content { display:flex; flex-direction:column; gap:4px; }
+.box-check-title { font-weight:700; font-size:.93rem; color:var(--black); }
+.box-price-badge {
+  display:inline-block; background:var(--black); color:var(--y-mid);
+  font-size:.72rem; font-weight:700; padding:2px 9px; border-radius:50px;
+  margin-left:6px; vertical-align:middle;
+}
+.box-check-sub { font-size:.82rem; color:var(--gtxt); line-height:1.5; }
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+  <div class="logo">Tally<span>Move</span></div>
+  <ul class="nav-links">
+    <li><a href="#how">How it works</a></li>
+    <li><a href="#pricing">Pricing</a></li>
+    <li><a href="#book">Book now</a></li>
+    <li><a href="#contact">Contact</a></li>
+  </ul>
+  <a href="#book" class="nav-cta">Book Now</a>
+</nav>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="hero-inner">
+    <div class="badge">🎓 FSU Students · Summer 2025</div>
+    <h1>Storage &amp; Moving,<br/><em>handled.</em></h1>
+    <p class="hero-sub">We pick up your stuff during finals week, store it all summer in a climate-controlled facility, and deliver it straight to your new place when fall starts.</p>
+    <div class="hero-actions">
+      <a href="#book" class="btn-p">Book a pickup →</a>
+      <a href="#how" class="btn-o">How it works</a>
+    </div>
+  </div>
+</section>
+
+<!-- HOW IT WORKS -->
+<section class="section" id="how">
+  <div class="sec-label">The process</div>
+  <div class="sec-title">Simple from start<br/>to finish.</div>
+  <div class="steps-grid">
+    <div class="step-card">
+      <div class="step-num">01</div>
+      <div class="tag">Spring</div>
+      <h3>Book Your Pickup</h3>
+      <p>Choose a morning, midday, or afternoon time slot for us to come directly to your dorm. We work around your finals schedule.</p>
+    </div>
+    <div class="step-card">
+      <div class="step-num">02</div>
+      <div class="tag">Invoice</div>
+      <h3>Invoice Sent to You</h3>
+      <p>After pickup, we'll send an invoice to your email. Payment is due the day before delivery. Paying cash? You can pay on the day of delivery.</p>
+    </div>
+    <div class="step-card">
+      <div class="step-num">03</div>
+      <div class="tag">Pickup Day</div>
+      <h3>We Pick Everything Up</h3>
+      <p>Our team labels every box and piece of furniture and takes clear records of every item..</p>
+    </div>
+    <div class="step-card">
+      <div class="step-num">04</div>
+      <div class="tag">Summer Storage</div>
+      <h3>Secure Climate-Controlled Storage</h3>
+      <p>Your items are stored safely all summer. We'll send you <strong>photo proof of your items secured in the unit</strong> so you have peace of mind all season.</p>
+    </div>
+    <div class="step-card">
+      <div class="step-num">05</div>
+      <div class="tag">Fall</div>
+      <h3>Fall Delivery</h3>
+      <p>Need to change your date or time? Just reach out and we are happy to make it work.</p>
+    </div>
+  </div>
+</section>
+
+<!-- PRICING -->
+<div class="pricing-wrap" id="pricing">
+  <div class="pricing-inner">
+    <div class="sec-label">Transparent pricing</div>
+    <div class="sec-title">Two simple options.</div>
+    <div class="pricing-grid">
+      <div class="pc feat">
+        <span class="pc-icon">📦</span>
+        <h3>6-Item Package</h3>
+        <span class="pc-amt">$275<small> flat</small></span>
+        <p class="pc-desc">Up to <strong style="color:var(--y-mid);">6 items</strong> any mix of boxes and furniture pieces. Includes pickup, full summer storage in a climate-controlled facility, and fall delivery.</p>
+        <p class="pc-note">+ $35 per item beyond 6</p>
+      </div>
+      <div class="pc">
+        <span class="pc-icon">🪑</span>
+        <h3>Individual Pricing</h3>
+        <span class="pc-amt">$70<small>/item</small></span>
+        <p class="pc-desc">Boxes or furniture <strong style="color:#d4a030;">$70 per item</strong>. Perfect if you only have a few things to store. Same great service, same climate-controlled storage.</p>
+        <p class="pc-note" style="color:#d4a030;border-left-color:#d4a030;">Best for 1 to 3 items</p>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- CONTACT -->
+<div class="contact-wrap" id="contact">
+  <div class="contact-inner">
+    <div class="sec-label">Get in touch</div>
+    <div class="sec-title" style="margin-bottom:36px;">Questions or concerns?<br/>We've got you.</div>
+    <div class="contact-grid">
+      <div class="contact-card">
+        <span class="cc-icon">📸</span>
+        <h3>Instagram</h3>
+        <a href="https://instagram.com/TallyMove" target="_blank">@TallyMove</a>
+        <p>DM us any time</p>
+      </div>
+      <div class="contact-card">
+        <span class="cc-icon">📞</span>
+        <h3>Call or Text</h3>
+        <a href="tel:8502967361">(850) 296-7361</a>
+        <p>Call or text anytime</p>
+      </div>
+      <div class="contact-card">
+        <span class="cc-icon">✉️</span>
+        <h3>Email</h3>
+        <a href="mailto:Tallymove25@gmail.com">Tallymove25@gmail.com</a>
+        <p>We reply fast</p>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- BOOKING FORM -->
+<div class="booking-wrap" id="book">
+  <div class="booking-inner">
+    <div class="sec-label" style="text-align:center;">Ready to go?</div>
+    <div class="sec-title" style="text-align:center;margin-bottom:32px;">Reserve your slot</div>
+
+    <div class="form-card">
+      <div class="tabs">
+        <button class="tab active" id="tab-pickup" onclick="switchTab('pickup',this)">📤 Spring Pickup</button>
+        <button class="tab" id="tab-dropoff" onclick="switchTab('dropoff',this)">📥 Fall Drop-off</button>
+      </div>
+      <div class="fbody">
+
+        <!-- ══════════════ PICKUP FLOW ══════════════ -->
+        <div id="pickupFlow">
+
+          <!-- STEP 1: Info + Pricing -->
+          <div class="fstep active" id="p-s1">
+            <div class="prog">
+              <div class="ps active"><div class="pd">1</div><span>Your info</span></div>
+              <div class="pl"></div>
+              <div class="ps"><div class="pd">2</div><span>Date &amp; Time</span></div>
+              <div class="pl"></div>
+              <div class="ps"><div class="pd">3</div><span>Location</span></div>
+            </div>
+
+            <div class="sec-tag">Your details</div>
+            <div class="frow">
+              <div class="fld"><label>First name *</label><input type="text" id="p-fn" placeholder="Seminole"/></div>
+              <div class="fld"><label>Last name *</label><input type="text" id="p-ln" placeholder="Smith"/></div>
+            </div>
+            <div class="frow">
+              <div class="fld"><label>Email *</label><input type="email" id="p-em" placeholder="you@email.com"/></div>
+              <div class="fld"><label>Phone *</label><input type="tel" id="p-ph" placeholder="(850) 555-0100"/></div>
+            </div>
+
+            <hr class="divider"/>
+            <div class="sec-tag">Choose your pricing plan</div>
+
+            <div class="pkg-toggle">
+              <button class="pkg-btn sel" id="pkg-6" onclick="selectPkg('6')">
+                <span class="pkg-price">$275</span>
+                <span class="pkg-label">6-Item Package</span>
+              </button>
+              <button class="pkg-btn" id="pkg-ind" onclick="selectPkg('ind')">
+                <span class="pkg-price">$70</span>
+                <span class="pkg-label">Individual / item</span>
+              </button>
+            </div>
+
+            <!-- 6-item detail -->
+            <div class="pkg-detail" id="detail-6">
+              <strong>6-Item Package - $275 flat.</strong> Includes any mix of boxes and furniture pieces (up to 6 total), full summer storage, and fall delivery.
+              <br/><span class="warn">Any items above 6 will be counted on pickup day and billed accordingly at $35 per additional item.</span>
+            </div>
+
+            <!-- Individual detail -->
+            <div class="pkg-detail ind-fields" id="detail-ind">
+              <strong>Individual Pricing - $70 per item.</strong> Boxes or furniture, priced the same.
+              <br/><br/><em>Your estimate does not need to be exact. We will count everything on pickup day and bill accordingly.</em>
+              <div class="frow" style="margin-top:14px;margin-bottom:0;">
+                <div class="fld"><label>Est. number of items (optional)</label><input type="number" id="p-ind-items" placeholder="e.g. 3" min="0"/></div>
+              </div>
+            </div>
+
+            <hr class="divider"/>
+            <div class="sec-tag">Need boxes?</div>
+            <div class="box-addon" id="boxAddon">
+              <label class="box-check-label">
+                <input type="checkbox" id="p-needs-boxes" onchange="toggleBoxInfo()"/>
+                <div class="box-check-content">
+                  <span class="box-check-title">Yes, I need boxes <span class="box-price-badge">+$25</span></span>
+                  <span class="box-check-sub">6 large boxes (18" x 24" x 24") with packing tape included. We will deliver them to your dorm before move-out.</span>
+                </div>
+              </label>
+            </div>
+
+            <button class="next-btn" onclick="nextStep('pickup',1)">Next → Date &amp; Time</button>
+          </div>
+
+          <!-- STEP 2: Date & Time -->
+          <div class="fstep" id="p-s2">
+            <div class="prog">
+              <div class="ps done"><div class="pd">✓</div><span>Your info</span></div>
+              <div class="pl done"></div>
+              <div class="ps active"><div class="pd">2</div><span>Date &amp; Time</span></div>
+              <div class="pl"></div>
+              <div class="ps"><div class="pd">3</div><span>Location</span></div>
+            </div>
+
+            <div class="sec-tag">Choose your pickup date</div>
+            <p style="font-size:.83rem;color:var(--gtxt);margin-bottom:12px;">Finals Week April 29, 30 &amp; May 1, 2025</p>
+            <div class="date-grid" id="pDates"></div>
+
+            <hr class="divider"/>
+            <div class="sec-tag">Choose a time slot</div>
+            <p style="font-size:.83rem;color:var(--gtxt);margin-bottom:12px;">Select a date above to see availability.</p>
+            <div class="slot-grid" id="pSlots"></div>
+
+            <div>
+              <button class="back-btn" onclick="prevStep('pickup',2)">← Back</button>
+              <button class="next-btn" onclick="nextStep('pickup',2)">Next → Location</button>
+            </div>
+          </div>
+
+          <!-- STEP 3: Location -->
+          <div class="fstep" id="p-s3">
+            <div class="prog">
+              <div class="ps done"><div class="pd">✓</div><span>Your info</span></div>
+              <div class="pl done"></div>
+              <div class="ps done"><div class="pd">✓</div><span>Date &amp; Time</span></div>
+              <div class="pl done"></div>
+              <div class="ps active"><div class="pd">3</div><span>Location</span></div>
+            </div>
+
+            <div class="sec-tag">Your dorm</div>
+            <div class="frow one">
+              <div class="fld">
+                <label>Residence hall *</label>
+                <select id="p-dorm">
+                  <option value="">Choose your dorm</option>
+                  <optgroup label="Newest / Recently Renovated">
+                    <option>Azalea Hall</option><option>Magnolia Hall</option>
+                    <option>Deviney Hall</option><option>Dorman Hall</option>
+                  </optgroup>
+                  <optgroup label="Historic Halls">
+                    <option>Cawthon Hall</option><option>Landis Hall</option>
+                    <option>Jennie Murphree Hall</option><option>Broward Hall</option>
+                    <option>Bryan Hall</option><option>Gilchrist Hall</option>
+                    <option>Reynolds Hall</option><option>McCollum Hall</option>
+                  </optgroup>
+                  <optgroup label="Apartment-Style (Upperclassman)">
+                    <option>Ragans Hall 1</option><option>Ragans Hall 2</option>
+                    <option>Ragans Hall 3</option><option>Ragans Hall 4</option>
+                    <option>Rogers Hall</option><option>Traditions Hall</option>
+                    <option>Salley East</option><option>Salley West</option>
+                  </optgroup>
+                  <optgroup label="Other On-Campus">
+                    <option>Wildwood North</option><option>Wildwood South</option>
+                    <option>DeGraff East</option><option>DeGraff West</option>
+                    <option>Kellum Hall</option><option>Wainwright Hall</option>
+                  </optgroup>
+                </select>
+              </div>
+            </div>
+            <div class="frow">
+              <div class="fld"><label>Room number</label><input type="text" id="p-room" placeholder="e.g. 314"/></div>
+              <div class="fld"><label>Floor</label><input type="text" id="p-floor" placeholder="e.g. 3"/></div>
+            </div>
+            <div class="frow one">
+              <div class="fld">
+                <label>Notes for our team (optional)</label>
+                <textarea id="p-notes" rows="2" style="resize:vertical;" placeholder="e.g. Large mirror, call when downstairs, elevator access needed…"></textarea>
+              </div>
+            </div>
+
+            <div id="p-err" class="err-banner">Something went wrong submitting your booking. Please try again or contact us directly.</div>
+
+            <div>
+              <button class="back-btn" onclick="prevStep('pickup',3)">← Back</button>
+              <button class="sub-btn" id="p-sub-btn" onclick="submitForm('pickup')">Confirm Pickup Booking ✓</button>
+            </div>
+          </div>
+
+          <div class="success-box" id="pickup-ok">
+            <div class="ico">🎉</div>
+            <h3>You're booked!</h3>
+            <p>We'll send a confirmation &amp; invoice to your email shortly.<br/>Questions? Call or text us at <strong>(850) 296-7361</strong>.</p>
+          </div>
+        </div>
+
+        <!-- ══════════════ DROP-OFF FLOW ══════════════ -->
+        <div id="dropoffFlow" style="display:none;">
+
+          <!-- STEP 1 -->
+          <div class="fstep active" id="d-s1">
+            <div class="prog">
+              <div class="ps active"><div class="pd">1</div><span>Your info</span></div>
+              <div class="pl"></div>
+              <div class="ps"><div class="pd">2</div><span>Date &amp; Time</span></div>
+              <div class="pl"></div>
+              <div class="ps"><div class="pd">3</div><span>Destination</span></div>
+            </div>
+
+            <div class="sec-tag">Your details</div>
+            <div class="frow">
+              <div class="fld"><label>First name *</label><input type="text" id="d-fn" placeholder="Seminole"/></div>
+              <div class="fld"><label>Last name *</label><input type="text" id="d-ln" placeholder="Smith"/></div>
+            </div>
+            <div class="frow">
+              <div class="fld"><label>Email *</label><input type="email" id="d-em" placeholder="you@email.com"/></div>
+              <div class="fld"><label>Phone *</label><input type="tel" id="d-ph" placeholder="(850) 555-0100"/></div>
+            </div>
+            <button class="next-btn" onclick="nextStep('dropoff',1)">Next → Date &amp; Time</button>
+          </div>
+
+          <!-- STEP 2 -->
+          <div class="fstep" id="d-s2">
+            <div class="prog">
+              <div class="ps done"><div class="pd">✓</div><span>Your info</span></div>
+              <div class="pl done"></div>
+              <div class="ps active"><div class="pd">2</div><span>Date &amp; Time</span></div>
+              <div class="pl"></div>
+              <div class="ps"><div class="pd">3</div><span>Destination</span></div>
+            </div>
+
+            <div class="sec-tag">Choose your drop-off date</div>
+            <p style="font-size:.83rem;color:var(--gtxt);margin-bottom:12px;">Fall Move-In August 19 to 23, 2025</p>
+            <div class="date-grid aug" id="dDates"></div>
+
+            <hr class="divider"/>
+            <div class="sec-tag">Choose a time slot</div>
+            <p style="font-size:.83rem;color:var(--gtxt);margin-bottom:12px;">Select a date above to see availability.</p>
+            <div class="slot-grid" id="dSlots"></div>
+
+            <div>
+              <button class="back-btn" onclick="prevStep('dropoff',2)">← Back</button>
+              <button class="next-btn" onclick="nextStep('dropoff',2)">Next → Destination</button>
+            </div>
+          </div>
+
+          <!-- STEP 3 -->
+          <div class="fstep" id="d-s3">
+            <div class="prog">
+              <div class="ps done"><div class="pd">✓</div><span>Your info</span></div>
+              <div class="pl done"></div>
+              <div class="ps done"><div class="pd">✓</div><span>Date &amp; Time</span></div>
+              <div class="pl done"></div>
+              <div class="ps active"><div class="pd">3</div><span>Destination</span></div>
+            </div>
+
+            <div class="sec-tag">Deliver to On-campus dorm</div>
+            <div class="frow one">
+              <div class="fld">
+                <label>Select dorm (if returning on-campus)</label>
+                <select id="d-dorm">
+                  <option value="">Choose your dorm (if applicable)</option>
+                  <optgroup label="Newest / Recently Renovated">
+                    <option>Azalea Hall</option><option>Magnolia Hall</option>
+                    <option>Deviney Hall</option><option>Dorman Hall</option>
+                  </optgroup>
+                  <optgroup label="Historic Halls">
+                    <option>Cawthon Hall</option><option>Landis Hall</option>
+                    <option>Jennie Murphree Hall</option><option>Broward Hall</option>
+                    <option>Bryan Hall</option><option>Gilchrist Hall</option>
+                    <option>Reynolds Hall</option><option>McCollum Hall</option>
+                  </optgroup>
+                  <optgroup label="Apartment-Style (Upperclassman)">
+                    <option>Ragans Hall 1</option><option>Ragans Hall 2</option>
+                    <option>Ragans Hall 3</option><option>Ragans Hall 4</option>
+                    <option>Rogers Hall</option><option>Traditions Hall</option>
+                    <option>Salley East</option><option>Salley West</option>
+                  </optgroup>
+                  <optgroup label="Other On-Campus">
+                    <option>Wildwood North</option><option>Wildwood South</option>
+                    <option>DeGraff East</option><option>DeGraff West</option>
+                    <option>Kellum Hall</option><option>Wainwright Hall</option>
+                  </optgroup>
+                </select>
+              </div>
+            </div>
+            <div class="frow">
+              <div class="fld"><label>Room number (if dorm)</label><input type="text" id="d-room" placeholder="e.g. 210"/></div>
+              <div class="fld"><label>Floor</label><input type="text" id="d-dorm-floor" placeholder="e.g. 2"/></div>
+            </div>
+
+            <hr class="divider"/>
+            <div class="sec-tag">OR: Off-campus apartment / house</div>
+            <div class="frow one">
+              <div class="fld">
+                <label>Full address</label>
+                <input type="text" id="d-addr" placeholder="e.g. 805 W Madison St, Tallahassee, FL 32304"/>
+              </div>
+            </div>
+            <div class="frow">
+              <div class="fld"><label>Unit / Apt #</label><input type="text" id="d-unit" placeholder="e.g. 4B"/></div>
+              <div class="fld"><label>Floor</label><input type="text" id="d-fl" placeholder="e.g. 2"/></div>
+            </div>
+
+            <div class="frow one">
+              <div class="fld">
+                <label>Notes for our team (optional)</label>
+                <textarea id="d-notes" rows="2" style="resize:vertical;" placeholder="Gate code, elevator, parking instructions, contact person…"></textarea>
+              </div>
+            </div>
+
+            <div id="d-err" class="err-banner">Something went wrong submitting your booking. Please try again or contact us directly.</div>
+
+            <div>
+              <button class="back-btn" onclick="prevStep('dropoff',3)">← Back</button>
+              <button class="sub-btn" id="d-sub-btn" onclick="submitForm('dropoff')">Confirm Drop-off Booking ✓</button>
+            </div>
+          </div>
+
+          <div class="success-box" id="dropoff-ok">
+            <div class="ico">📦</div>
+            <h3>Drop-off confirmed!</h3>
+            <p>We'll send a confirmation to your email.<br/>Need to change anything? Call or text <strong>(850) 296-7361</strong>.</p>
+          </div>
+        </div>
+
+      </div><!-- /fbody -->
+    </div><!-- /form-card -->
+    <p class="fnote">Need help? Call/text <strong>(850) 296-7361</strong> or email <strong>Tallymove25@gmail.com</strong></p>
+  </div>
+</div>
+
+<footer>
+  <strong>TallyMove</strong>
+  <div class="footer-links">
+    <a href="#how">How it works</a>
+    <a href="#pricing">Pricing</a>
+    <a href="#book">Book now</a>
+    <a href="#contact">Contact</a>
+    <a href="https://instagram.com/TallyMove" target="_blank">@TallyMove</a>
+    <a href="tel:8502967361">(850) 296-7361</a>
+    <a href="mailto:Tallymove25@gmail.com">Tallymove25@gmail.com</a>
+  </div>
+  <p style="margin-top:16px;font-size:.8rem;">Built for FSU Seminoles 🏈 · &copy; 2025 TallyMove · Tallahassee, FL</p>
+</footer>
+
+<script>
+// ─── CONFIG paste your Google Apps Script URL here ────────────────────────
+const SHEET_URL = "https://script.google.com/macros/s/AKfycbzSwHmtS5m0t2YYseTIM_1Su50qq-nbHN_ufPXshpZUkmbDH4tF-Ku2nYWYhYANDm4xhg/exec";
+
+const PICKUP_DATES  = [{l:"Apr 29",d:"Wed"},{l:"Apr 30",d:"Thu"},{l:"May 1",d:"Fri"}];
+const DROPOFF_DATES = [{l:"Aug 19",d:"Wed"},{l:"Aug 20",d:"Thu"},{l:"Aug 21",d:"Fri"},{l:"Aug 22",d:"Sat"},{l:"Aug 23",d:"Sun"}];
+const SLOTS = [
+  {id:"morning",   label:"Morning",   time:"8am  to  11am"},
+  {id:"midday",    label:"Midday",    time:"12pm  to  3pm"},
+  {id:"afternoon", label:"Afternoon", time:"4pm  to  7pm"},
+];
+let MAX_PICKUP = 5;
+let MAX_DROPOFF = 3;
+
+// ─── LIVE COUNTS ─────────────────────────────────────────────────────────────
+let liveCounts = {};
+let countsLoaded = false;
+
+async function fetchLiveCounts() {
+  if (!SHEET_URL || SHEET_URL === "YOUR_GOOGLE_APPS_SCRIPT_URL_HERE") {
+    countsLoaded = true; return;
+  }
+  try {
+    // Google Apps Script blocks CORS on cross-origin requests.
+    // We route the GET through allorigins.win which adds the required header.
+    const proxyUrl = "https://api.allorigins.win/get?url=" + encodeURIComponent(SHEET_URL + "?action=getCounts");
+    const res  = await fetch(proxyUrl);
+    const wrap = await res.json();
+    const json = JSON.parse(wrap.contents);
+    if (json.status === "ok") {
+      liveCounts = json.counts || {};
+      if (json.maxPickup)  MAX_PICKUP  = json.maxPickup;
+      if (json.maxDropoff) MAX_DROPOFF = json.maxDropoff;
+    }
+  } catch (e) {
+    console.warn("Could not fetch live counts:", e);
+  }
+  countsLoaded = true;
+}
+
+function slotKey(type, date, slot) {
+  return type + "_" + (date||"").replace(/\s/g,"") + "_" + slot;
+}
+function getLiveCount(type, date, slot) {
+  if (!date || !slot) return 0;
+  const live  = liveCounts[slotKey(type, date, slot)] || 0;
+  const local = parseInt(localStorage.getItem("tm_local_" + slotKey(type, date, slot)) || "0");
+  return Math.max(live, local);
+}
+function bumpLocalCount(type, date, slot) {
+  const k = "tm_local_" + slotKey(type, date, slot);
+  localStorage.setItem(k, (parseInt(localStorage.getItem(k)||"0")+1).toString());
+}
+
+// ─── STATE ───────────────────────────────────────────────────────────────────
+let selPDate = null, selPSlot = null;
+let selDDate = null, selDSlot = null;
+let activePkg = "6";
+
+// ─── INIT ────────────────────────────────────────────────────────────────────
+window.addEventListener("DOMContentLoaded", async () => {
+  renderDates("pDates", PICKUP_DATES, "p", "pickup");
+  renderSlots("pSlots", "pickup", null);
+  renderDates("dDates", DROPOFF_DATES, "d", "dropoff");
+  renderSlots("dSlots", "dropoff", null);
+  await fetchLiveCounts();
+  if (selPDate) renderSlots("pSlots", "pickup",  selPDate);
+  if (selDDate) renderSlots("dSlots", "dropoff", selDDate);
+});
+
+// ─── DATE RENDER ─────────────────────────────────────────────────────────────
+function renderDates(containerId, dates, prefix, type) {
+  const el = document.getElementById(containerId);
+  el.innerHTML = "";
+  dates.forEach(dt => {
+    const b = document.createElement("button");
+    b.className = "dbt";
+    b.innerHTML = `<span class="dbt-day">${dt.d}</span>${dt.l}`;
+    b.onclick = () => selectDate(b, dt.l, prefix, containerId, prefix + "Slots", type);
+    el.appendChild(b);
+  });
+}
+function selectDate(btn, label, prefix, dateId, slotId, type) {
+  document.querySelectorAll("#" + dateId + " .dbt").forEach(b => b.classList.remove("sel"));
+  btn.classList.add("sel");
+  if (prefix === "p") { selPDate = label; selPSlot = null; }
+  else                { selDDate = label; selDSlot = null; }
+  renderSlots(slotId, type, label);
+}
+
+// ─── SLOT RENDER ─────────────────────────────────────────────────────────────
+function renderSlots(containerId, type, dateLabel) {
+  const el = document.getElementById(containerId);
+  el.innerHTML = "";
+  SLOTS.forEach(s => {
+    const cnt  = getLiveCount(type, dateLabel, s.id);
+    const rem  = (type === "pickup" ? MAX_PICKUP : MAX_DROPOFF) - cnt;
+    const full = rem <= 0;
+    const btn  = document.createElement("button");
+    btn.className = "slot" + (full ? " full" : "");
+    btn.disabled  = full || !dateLabel;
+    let capCls, capTxt;
+    if (!dateLabel)  { capCls="";         capTxt="Pick a date first"; }
+    else if (full)   { capCls="cap-full"; capTxt="Full"; }
+    else if (rem<=3) { capCls="cap-warn"; capTxt=rem+" spot"+(rem===1?"":"s")+" left"; }
+    else if (rem<=6) { capCls="cap-warn"; capTxt=rem+" spots left"; }
+    else             { capCls="cap-ok";   capTxt=rem+" spots left"; }
+    btn.innerHTML = `${s.label}<span class="slot-time">${s.time}</span><span class="slot-cap ${capCls}">${capTxt}</span>`;
+    if (!full && dateLabel) {
+      btn.onclick = () => {
+        document.querySelectorAll("#"+containerId+" .slot").forEach(b=>b.classList.remove("sel"));
+        btn.classList.add("sel");
+        if (type==="pickup") selPSlot=s.id; else selDSlot=s.id;
+      };
+    }
+    el.appendChild(btn);
+  });
+}
+
+// ─── PRICING TOGGLE ──────────────────────────────────────────────────────────
+function selectPkg(pkg) {
+  activePkg = pkg;
+  document.getElementById("pkg-6").classList.toggle("sel", pkg==="6");
+  document.getElementById("pkg-ind").classList.toggle("sel", pkg==="ind");
+  document.getElementById("detail-6").style.display   = pkg==="6"   ? "block":"none";
+  document.getElementById("detail-ind").style.display = pkg==="ind" ? "block":"none";
+}
+
+// ─── TAB SWITCH ──────────────────────────────────────────────────────────────
+function switchTab(tab, btn) {
+  document.querySelectorAll(".tab").forEach(t=>t.classList.remove("active"));
+  btn.classList.add("active");
+  document.getElementById("pickupFlow").style.display  = tab==="pickup"  ? "block":"none";
+  document.getElementById("dropoffFlow").style.display = tab==="dropoff" ? "block":"none";
+}
+
+// ─── STEP NAVIGATION ─────────────────────────────────────────────────────────
+function nextStep(type, from) {
+  if (!validate(type, from)) return;
+  showStep(type, from+1);
+  if (from+1===2) {
+    fetchLiveCounts().then(() => {
+      const date = type==="pickup" ? selPDate : selDDate;
+      if (date) renderSlots(type==="pickup"?"pSlots":"dSlots", type, date);
+    });
+  }
+}
+function prevStep(type, from) { showStep(type, from-1); }
+function showStep(type, step) {
+  const prefix = type==="pickup"?"p":"d";
+  const flowId = type==="pickup"?"pickupFlow":"dropoffFlow";
+  document.querySelectorAll("#"+flowId+" .fstep").forEach(s=>s.classList.remove("active"));
+  const t = document.getElementById(prefix+"-s"+step);
+  if (t) t.classList.add("active");
+}
+
+// ─── VALIDATION ──────────────────────────────────────────────────────────────
+function validate(type, step) {
+  if (type==="pickup" && step===1) {
+    if (!document.getElementById("p-fn").value.trim()) { alert("Please enter your first name."); return false; }
+    const em = document.getElementById("p-em").value.trim();
+    if (!em||!em.includes("@")) { alert("Please enter a valid email address."); return false; }
+    if (!document.getElementById("p-ph").value.trim()) { alert("Please enter your phone number."); return false; }
+  }
+  if (type==="pickup" && step===2) {
+    if (!selPDate) { alert("Please select a pickup date."); return false; }
+    if (!selPSlot) { alert("Please select a time slot."); return false; }
+    if (getLiveCount("pickup", selPDate, selPSlot) >= MAX_PICKUP) {
+      alert("This slot just filled up! Please select another time.");
+      renderSlots("pSlots","pickup",selPDate); selPSlot=null; return false;
+    }
+  }
+  if (type==="pickup" && step===3) {
+    if (!document.getElementById("p-dorm").value) { alert("Please select your residence hall."); return false; }
+  }
+  if (type==="dropoff" && step===1) {
+    if (!document.getElementById("d-fn").value.trim()) { alert("Please enter your first name."); return false; }
+    const em = document.getElementById("d-em").value.trim();
+    if (!em||!em.includes("@")) { alert("Please enter a valid email address."); return false; }
+    if (!document.getElementById("d-ph").value.trim()) { alert("Please enter your phone number."); return false; }
+  }
+  if (type==="dropoff" && step===2) {
+    if (!selDDate) { alert("Please select a drop-off date."); return false; }
+    if (!selDSlot) { alert("Please select a time slot."); return false; }
+    if (getLiveCount("dropoff", selDDate, selDSlot) >= MAX_DROPOFF) {
+      alert("This slot just filled up! Please select another time.");
+      renderSlots("dSlots","dropoff",selDDate); selDSlot=null; return false;
+    }
+  }
+  return true;
+}
+
+// ─── SUBMIT ──────────────────────────────────────────────────────────────────
+async function submitForm(type) {
+  const btnEl = document.getElementById(type==="pickup"?"p-sub-btn":"d-sub-btn");
+  const errEl = document.getElementById(type==="pickup"?"p-err":"d-err");
+  errEl.classList.remove("show");
+
+  let payload = { type, timestamp: new Date().toISOString() };
+  if (type==="pickup") {
+    if (!validate("pickup",3)) return;
+    payload = { ...payload,
+      firstName:    document.getElementById("p-fn").value.trim(),
+      lastName:     document.getElementById("p-ln").value.trim(),
+      email:        document.getElementById("p-em").value.trim(),
+      phone:        document.getElementById("p-ph").value.trim(),
+      pricingPlan:  activePkg==="6" ? "6-Item Package ($275)" : "Individual ($70/item)",
+      estBoxes:     activePkg==="6"   ? (document.getElementById("p-bx").value||"—") : "—",
+      estFurniture: activePkg==="6"   ? (document.getElementById("p-fu").value||"—") : "—",
+      estItems:     activePkg==="ind" ? (document.getElementById("p-ind-items").value||"—") : "—",
+      pickupDate: selPDate, timeSlot: selPSlot,
+      dorm:  document.getElementById("p-dorm").value,
+      room:  document.getElementById("p-room").value.trim(),
+      floor: document.getElementById("p-floor").value.trim(),
+      needsBoxes: document.getElementById("p-needs-boxes") && document.getElementById("p-needs-boxes").checked ? "Yes (+$25)" : "No",
+      notes: document.getElementById("p-notes").value.trim(),
+    };
+  } else {
+    if (!validate("dropoff",3)) return;
+    payload = { ...payload,
+      firstName:   document.getElementById("d-fn").value.trim(),
+      lastName:    document.getElementById("d-ln").value.trim(),
+      email:       document.getElementById("d-em").value.trim(),
+      phone:       document.getElementById("d-ph").value.trim(),
+      dropoffDate: selDDate, timeSlot: selDSlot,
+      dorm:      document.getElementById("d-dorm").value,
+      room:      document.getElementById("d-room").value.trim(),
+      dormFloor: document.getElementById("d-dorm-floor").value.trim(),
+      address:   document.getElementById("d-addr").value.trim(),
+      unit:      document.getElementById("d-unit").value.trim(),
+      aptFloor:  document.getElementById("d-fl").value.trim(),
+      notes:     document.getElementById("d-notes").value.trim(),
+    };
+  }
+
+  const origLabel = btnEl.innerHTML;
+  btnEl.innerHTML = `<span class="spinner"></span> Submitting…`;
+  btnEl.disabled  = true;
+
+  // ── Demo mode (no URL set) ──
+  if (!SHEET_URL || SHEET_URL === "YOUR_GOOGLE_APPS_SCRIPT_URL_HERE") {
+    const saved = JSON.parse(localStorage.getItem("tm_submissions")||"[]");
+    saved.push(payload);
+    localStorage.setItem("tm_submissions", JSON.stringify(saved));
+    finishSubmit(type, payload);
+    btnEl.innerHTML = origLabel;
+    btnEl.disabled  = false;
+    return;
+  }
+
+  // ── Real submission ──
+  // Google Apps Script requires no-cors + text/plain to avoid CORS preflight.
+  // We cannot read the response body with no-cors, so we show success optimistically.
+  // The server-side slot guard still protects against double-bookings.
+  try {
+    await fetch(SHEET_URL, {
+      method:  "POST",
+      mode:    "no-cors",
+      headers: { "Content-Type": "text/plain" },
+      body:    JSON.stringify(payload),
+    });
+    finishSubmit(type, payload);
+  } catch (e) {
+    console.error("Submit error:", e);
+    errEl.classList.add("show");
+    btnEl.innerHTML = origLabel;
+    btnEl.disabled  = false;
+  }
+}
+
+
+function toggleBoxInfo() {
+  // just visual feedback, value captured in payload
+}
+function finishSubmit(type, payload) {
+  const date = type==="pickup" ? payload.pickupDate : payload.dropoffDate;
+  bumpLocalCount(type, date, payload.timeSlot);
+  const flowId = type==="pickup"?"pickupFlow":"dropoffFlow";
+  document.querySelectorAll("#"+flowId+" .fstep").forEach(s=>s.classList.remove("active"));
+  document.getElementById(type+"-ok").classList.add("show");
+}
+</script>
+</body>
+</html>
