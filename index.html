@@ -736,8 +736,7 @@ async function fetchLiveCounts() {
     const proxyUrl = SHEET_URL + "?action=getCounts";
     const res  = await fetch(proxyUrl);
     const wrap = await res.text();
-    const unwrap = JSON.parse(wrap)
-    const json = unwrap.contents;
+    const json = JSON.parse(wrap)
     if (json.status === "ok") {
       liveCounts = json.counts || {};
       if (json.maxPickup)  MAX_PICKUP  = json.maxPickup;
