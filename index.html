@@ -83,7 +83,7 @@ nav{position:sticky;top:0;z-index:100;background:rgba(255,247,214,.95);backdrop-
 .pricing-inner{max-width:1120px;margin:0 auto;}
 .pricing-wrap .sec-label{color:var(--y-mid);}
 .pricing-wrap .sec-title{color:var(--white);}
-.pricing-grid{display:grid;grid-template-columns:1fr 1fr;gap:22px;max-width:820px;}
+.pricing-grid{display:grid;grid-template-columns:1fr 1fr 1fr;gap:22px;max-width:1120px;}
 .pc{background:#1f140a;border:1.5px solid #3a2510;border-radius:20px;padding:32px 28px;
   transition:transform .2s,border-color .2s;position:relative;}
 .pc:hover{transform:translateY(-4px);border-color:var(--y-mid);}
@@ -141,7 +141,7 @@ nav{position:sticky;top:0;z-index:100;background:rgba(255,247,214,.95);backdrop-
   background-repeat:no-repeat;background-position:right 14px center;padding-right:36px;}
 
 /* Pricing toggle */
-.pkg-toggle{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:16px;}
+.pkg-toggle{display:grid;grid-template-columns:1fr 1fr 1fr;gap:12px;margin-bottom:16px;}
 .pkg-btn{padding:16px 12px;border:2px solid #e8d89a;border-radius:12px;background:var(--soft);
   font-family:'DM Sans',sans-serif;font-size:.88rem;font-weight:600;color:var(--gtxt);
   cursor:pointer;transition:all .2s;text-align:center;}
@@ -246,28 +246,7 @@ footer .footer-links a:hover{color:var(--y-mid);}
   .pkg-toggle{grid-template-columns:1fr;}
 }
 
-/* Box addon checkbox */
-.box-addon { margin-bottom:4px; }
-.box-check-label {
-  display:flex; align-items:flex-start; gap:12px; cursor:pointer;
-  background:var(--soft); border:1.5px solid #ffe8a0; border-radius:12px;
-  padding:16px; transition:border-color .2s, background .2s;
-}
-.box-check-label:hover { border-color:var(--y-deep); background:#fffae6; }
-.box-check-label input[type="checkbox"] {
-  width:18px; height:18px; margin-top:3px; flex-shrink:0; cursor:pointer;
-  accent-color:var(--black);
-}
-.box-check-label input[type="checkbox"]:checked ~ .box-check-content { color:var(--black); }
-.box-check-label:has(input:checked) { border-color:var(--black); background:#fffae6; }
-.box-check-content { display:flex; flex-direction:column; gap:4px; }
-.box-check-title { font-weight:700; font-size:.93rem; color:var(--black); }
-.box-price-badge {
-  display:inline-block; background:var(--black); color:var(--y-mid);
-  font-size:.72rem; font-weight:700; padding:2px 9px; border-radius:50px;
-  margin-left:6px; vertical-align:middle;
-}
-.box-check-sub { font-size:.82rem; color:var(--gtxt); line-height:1.5; }
+
 </style>
 </head>
 <body>
@@ -304,7 +283,7 @@ footer .footer-links a:hover{color:var(--y-mid);}
   <div class="steps-grid">
     <div class="step-card">
       <div class="step-num">01</div>
-      <div class="tag">Spring</div>
+      <div class="tag">Summer B</div>
       <h3>Book Your Pickup</h3>
       <p>Choose a morning, midday, or afternoon time slot for us to come directly to your dorm. We work around your finals schedule.</p>
     </div>
@@ -339,21 +318,29 @@ footer .footer-links a:hover{color:var(--y-mid);}
 <div class="pricing-wrap" id="pricing">
   <div class="pricing-inner">
     <div class="sec-label">Transparent pricing</div>
-    <div class="sec-title">Two simple options.</div>
+    <div class="sec-title">Three simple options.</div>
     <div class="pricing-grid">
-      <div class="pc feat">
-        <span class="pc-icon">📦</span>
-        <h3>6-Item Package</h3>
-        <span class="pc-amt">$275<small> flat</small></span>
-        <p class="pc-desc">Up to <strong style="color:var(--y-mid);">6 items</strong> any mix of boxes and furniture pieces. Includes pickup, full summer storage in a climate-controlled facility, and fall delivery.</p>
-        <p class="pc-note">+ $35 per item beyond 6</p>
-      </div>
       <div class="pc">
         <span class="pc-icon">🪑</span>
         <h3>Individual Pricing</h3>
-        <span class="pc-amt">$70<small>/item</small></span>
-        <p class="pc-desc">Boxes or furniture <strong style="color:#d4a030;">$70 per item</strong>. Perfect if you only have a few things to store. Same great service, same climate-controlled storage.</p>
+        <span class="pc-amt">$50<small>/item</small></span>
+        <p class="pc-desc">Boxes or furniture <strong style="color:#d4a030;">$50 per item</strong>. Perfect if you only have a few things to store. Same great service, same climate-controlled storage.</p>
         <p class="pc-note" style="color:#d4a030;border-left-color:#d4a030;">Best for 1 to 3 items</p>
+      </div>
+      <div class="pc feat">
+        <span class="pc-icon">📦</span>
+        <h3>6-Item Package</h3>
+        <span class="pc-amt">$225<small> flat</small></span>
+        <p class="pc-desc">Up to <strong style="color:var(--y-mid);">6 items</strong> any mix of boxes and furniture pieces. Includes pickup, full summer storage in a climate-controlled facility, and fall delivery.</p>
+        <p class="pc-note">+ $25 per item beyond 6</p>
+      </div>
+      <div class="pc">
+        <span class="pc-icon">🧳</span>
+        <h3>10-Item Package</h3>
+        <span class="pc-amt">$299<small> flat</small></span>
+        <p class="pc-desc">Up to <strong style="color:#d4a030;">10 items</strong> any mix of boxes and furniture pieces. Includes pickup, full summer storage in a climate-controlled facility, and fall delivery.</p>
+        <p class="pc-note" style="color:#d4a030;border-left-color:#d4a030;">+ $25 per item beyond 10</p>
+      </div>
       </div>
     </div>
   </div>
@@ -377,12 +364,6 @@ footer .footer-links a:hover{color:var(--y-mid);}
         <a href="tel:8502967361">(850) 296-7361</a>
         <p>Call or text anytime</p>
       </div>
-      <div class="contact-card">
-        <span class="cc-icon">✉️</span>
-        <h3>Email</h3>
-        <a href="mailto:Tallymove25@gmail.com">Tallymove25@gmail.com</a>
-        <p>We reply fast</p>
-      </div>
     </div>
   </div>
 </div>
@@ -395,7 +376,7 @@ footer .footer-links a:hover{color:var(--y-mid);}
 
     <div class="form-card">
       <div class="tabs">
-        <button class="tab active" id="tab-pickup" onclick="switchTab('pickup',this)">📤 Spring Pickup</button>
+        <button class="tab active" id="tab-pickup" onclick="switchTab('pickup',this)">📤 Summer B Pickup</button>
         <button class="tab" id="tab-dropoff" onclick="switchTab('dropoff',this)">📥 Fall Drop-off</button>
       </div>
       <div class="fbody">
@@ -427,25 +408,35 @@ footer .footer-links a:hover{color:var(--y-mid);}
             <div class="sec-tag">Choose your pricing plan</div>
 
             <div class="pkg-toggle">
+              <button class="pkg-btn" id="pkg-ind" onclick="selectPkg('ind')">
+                <span class="pkg-price">$50</span>
+                <span class="pkg-label">Individual / item</span>
+              </button>
               <button class="pkg-btn sel" id="pkg-6" onclick="selectPkg('6')">
-                <span class="pkg-price">$275</span>
+                <span class="pkg-price">$225</span>
                 <span class="pkg-label">6-Item Package</span>
               </button>
-              <button class="pkg-btn" id="pkg-ind" onclick="selectPkg('ind')">
-                <span class="pkg-price">$70</span>
-                <span class="pkg-label">Individual / item</span>
+              <button class="pkg-btn" id="pkg-10" onclick="selectPkg('10')">
+                <span class="pkg-price">$299</span>
+                <span class="pkg-label">10-Item Package</span>
               </button>
             </div>
 
             <!-- 6-item detail -->
             <div class="pkg-detail" id="detail-6">
-              <strong>6-Item Package - $275 flat.</strong> Includes any mix of boxes and furniture pieces (up to 6 total), full summer storage, and fall delivery.
-              <br/><span class="warn">Any items above 6 will be counted on pickup day and billed accordingly at $35 per additional item.</span>
+              <strong>6-Item Package - $225 flat.</strong> Includes any mix of boxes and furniture pieces (up to 6 total), full summer storage, and fall delivery.
+              <br/><span class="warn">Any items above 6 will be counted on pickup day and billed accordingly at $25 per additional item.</span>
+            </div>
+
+            <!-- 10-item detail -->
+            <div class="pkg-detail ind-fields" id="detail-10">
+              <strong>10-Item Package - $299 flat.</strong> Includes any mix of boxes and furniture pieces (up to 10 total), full summer storage, and fall delivery.
+              <br/><span class="warn">Any items above 10 will be counted on pickup day and billed accordingly at $25 per additional item.</span>
             </div>
 
             <!-- Individual detail -->
             <div class="pkg-detail ind-fields" id="detail-ind">
-              <strong>Individual Pricing - $70 per item.</strong> Boxes or furniture, priced the same.
+              <strong>Individual Pricing - $50 per item.</strong> Boxes or furniture, priced the same.
               <br/><br/><em>Your estimate does not need to be exact. We will count everything on pickup day and bill accordingly.</em>
               <div class="frow" style="margin-top:14px;margin-bottom:0;">
                 <div class="fld"><label>Est. number of items (optional)</label><input type="number" id="p-ind-items" placeholder="e.g. 3" min="0"/></div>
@@ -453,15 +444,12 @@ footer .footer-links a:hover{color:var(--y-mid);}
             </div>
 
             <hr class="divider"/>
-            <div class="sec-tag">Need boxes?</div>
-            <div class="box-addon" id="boxAddon">
-              <label class="box-check-label">
-                <input type="checkbox" id="p-needs-boxes" onchange="toggleBoxInfo()"/>
-                <div class="box-check-content">
-                  <span class="box-check-title">Yes, I need boxes <span class="box-price-badge">+$25</span></span>
-                  <span class="box-check-sub">6 large boxes (18" x 24" x 24") with packing tape included. We will deliver them to your dorm before move-out.</span>
-                </div>
-              </label>
+            <div style="background:var(--y-light);border:2px solid var(--y-deep);border-radius:14px;padding:20px 22px;">
+              <div style="font-size:1.05rem;font-weight:800;color:var(--black);margin-bottom:8px;">📦 Need boxes?</div>
+              <p style="font-size:.95rem;color:var(--black);line-height:1.7;">
+                <strong>We recommend reusable moving bags</strong> over cardboard boxes. They're nearly the same price, way easier to carry and pack, and since they don't fall apart like cardboard you only have to buy them once.
+                <a href="https://amzn.to/4v4XERQ" target="_blank" rel="noopener" style="color:var(--y-dark);font-weight:800;text-decoration:underline;">Check them out here →</a>
+              </p>
             </div>
 
             <button class="next-btn" onclick="nextStep('pickup',1)">Next → Date &amp; Time</button>
@@ -478,7 +466,7 @@ footer .footer-links a:hover{color:var(--y-mid);}
             </div>
 
             <div class="sec-tag">Choose your pickup date</div>
-            <p style="font-size:.83rem;color:var(--gtxt);margin-bottom:12px;">Finals Week April 29, 30 &amp; May 1, 2025</p>
+            <p style="font-size:.83rem;color:var(--gtxt);margin-bottom:12px;">Summer B Finals Week July 30, 31 &amp; Aug 1</p>
             <div class="date-grid" id="pDates"></div>
 
             <hr class="divider"/>
@@ -555,6 +543,11 @@ footer .footer-links a:hover{color:var(--y-mid);}
             <div class="ico">🎉</div>
             <h3>You're booked!</h3>
             <p>We'll send you a confirmation text within 24 hours! <br/>Questions? Call or text us at <strong>(850) 296-7361</strong>.</p>
+            <div style="margin-top:26px;padding:20px;background:var(--soft);border:1.5px solid #ffe8a0;border-radius:14px;">
+              <p style="font-weight:700;color:var(--black);margin-bottom:10px;">One more thing, don't forget your Fall Drop-off!</p>
+              <p style="font-size:.85rem;color:var(--gtxt);margin-bottom:14px;">We've already saved your info. Just pick a date, time, and delivery location.</p>
+              <button class="next-btn" style="margin-top:0;" onclick="goToDropoffTab()">Sign up for Fall Drop-off →</button>
+            </div>
           </div>
         </div>
 
@@ -690,7 +683,7 @@ footer .footer-links a:hover{color:var(--y-mid);}
 
       </div><!-- /fbody -->
     </div><!-- /form-card -->
-    <p class="fnote">Need help? Call/text <strong>(850) 296-7361</strong> or email <strong>Tallymove25@gmail.com</strong></p>
+    <p class="fnote">Need help? Call/text <strong>(850) 296-7361</strong></p>
   </div>
 </div>
 
@@ -703,7 +696,6 @@ footer .footer-links a:hover{color:var(--y-mid);}
     <a href="#contact">Contact</a>
     <a href="https://instagram.com/TallyMove" target="_blank">@TallyMove</a>
     <a href="tel:8502967361">(850) 296-7361</a>
-    <a href="mailto:Tallymove25@gmail.com">Tallymove25@gmail.com</a>
   </div>
   <p style="margin-top:16px;font-size:.8rem;">Built for FSU Seminoles 🏈 · &copy; 2025 TallyMove · Tallahassee, FL</p>
 </footer>
@@ -712,15 +704,23 @@ footer .footer-links a:hover{color:var(--y-mid);}
 // ─── CONFIG paste your Google Apps Script URL here ────────────────────────
 const SHEET_URL = "https://script.google.com/macros/s/AKfycbxZXeosmm_pQXguJxVYqdq0ApXCsFsG4_bWU7nx1ZPdlekQw3ZtccT3XGyMCHdMJqOKfw/exec";
 
-const PICKUP_DATES  = [{l:"Apr 29",d:"Wed"},{l:"Apr 30",d:"Thu"},{l:"May 01",d:"Fri"}];
+const PICKUP_DATES  = [{l:"Jul 30",d:"Thu"},{l:"Jul 31",d:"Fri"},{l:"Aug 01",d:"Sat"}];
 const DROPOFF_DATES = [{l:"Aug 19",d:"Wed"},{l:"Aug 20",d:"Thu"},{l:"Aug 21",d:"Fri"},{l:"Aug 22",d:"Sat"},{l:"Aug 23",d:"Sun"}];
 const SLOTS = [
   {id:"morning",   label:"Morning",   time:"8am  to  11am"},
   {id:"midday",    label:"Midday",    time:"12pm  to  3pm"},
   {id:"afternoon", label:"Afternoon", time:"4pm  to  7pm"},
 ];
+// Dates on which pickup only offers a subset of the standard SLOTS above.
+// Key = date label as it appears in PICKUP_DATES, value = array of allowed slot ids.
+const PICKUP_LIMITED_SLOT_DATES = { "Aug 01": ["morning"] };
 let MAX_PICKUP = 5;
 let MAX_DROPOFF = 3;
+// Per-slot capacity override for pickup (falls back to MAX_PICKUP if not listed).
+const PICKUP_SLOT_CAPACITY = { morning: 6 };
+function pickupCapacity(slotId) {
+  return PICKUP_SLOT_CAPACITY[slotId] !== undefined ? PICKUP_SLOT_CAPACITY[slotId] : MAX_PICKUP;
+}
 
 // ─── LIVE COUNTS ─────────────────────────────────────────────────────────────
 let liveCounts = {};
@@ -805,9 +805,13 @@ function selectDate(btn, label, prefix, dateId, slotId, type) {
 function renderSlots(containerId, type, dateLabel) {
   const el = document.getElementById(containerId);
   el.innerHTML = "";
-  SLOTS.forEach(s => {
+  const allowedSlots = (type === "pickup" && dateLabel && PICKUP_LIMITED_SLOT_DATES[dateLabel])
+    ? SLOTS.filter(s => PICKUP_LIMITED_SLOT_DATES[dateLabel].includes(s.id))
+    : SLOTS;
+  allowedSlots.forEach(s => {
     const cnt  = getLiveCount(type, dateLabel, s.id);
-    const rem  = (type === "pickup" ? MAX_PICKUP : MAX_DROPOFF) - cnt;
+    const cap  = type === "pickup" ? pickupCapacity(s.id) : MAX_DROPOFF;
+    const rem  = cap - cnt;
     const full = rem <= 0;
     const btn  = document.createElement("button");
     btn.className = "slot" + (full ? " full" : "");
@@ -834,8 +838,10 @@ function renderSlots(containerId, type, dateLabel) {
 function selectPkg(pkg) {
   activePkg = pkg;
   document.getElementById("pkg-6").classList.toggle("sel", pkg==="6");
+  document.getElementById("pkg-10").classList.toggle("sel", pkg==="10");
   document.getElementById("pkg-ind").classList.toggle("sel", pkg==="ind");
   document.getElementById("detail-6").style.display   = pkg==="6"   ? "block":"none";
+  document.getElementById("detail-10").style.display  = pkg==="10"  ? "block":"none";
   document.getElementById("detail-ind").style.display = pkg==="ind" ? "block":"none";
 }
 
@@ -845,6 +851,7 @@ function switchTab(tab, btn) {
   btn.classList.add("active");
   document.getElementById("pickupFlow").style.display  = tab==="pickup"  ? "block":"none";
   document.getElementById("dropoffFlow").style.display = tab==="dropoff" ? "block":"none";
+  if (tab === "dropoff") prefillDropoffFromPickup();
   lockIfSubmitted(tab);
 }
 
@@ -879,7 +886,7 @@ function validate(type, step) {
   if (type==="pickup" && step===2) {
     if (!selPDate) { alert("Please select a pickup date."); return false; }
     if (!selPSlot) { alert("Please select a time slot."); return false; }
-    if (getLiveCount("pickup", selPDate, selPSlot) >= MAX_PICKUP) {
+    if (getLiveCount("pickup", selPDate, selPSlot) >= pickupCapacity(selPSlot)) {
       alert("This slot just filled up! Please select another time.");
       renderSlots("pSlots","pickup",selPDate); selPSlot=null; return false;
     }
@@ -918,13 +925,12 @@ async function submitForm(type) {
       lastName:     document.getElementById("p-ln").value.trim(),
       email:        document.getElementById("p-em").value.trim(),
       phone:        document.getElementById("p-ph").value.trim(),
-      pricingPlan:  activePkg==="6" ? "6-Item Package ($275)" : "Individual ($70/item)",
-      estItems:     activePkg==="ind" ? (document.getElementById("p-ind-items").value||"—") : "—",
+      pricingPlan:  activePkg==="6" ? "6-Item Package ($225)" : activePkg==="10" ? "10-Item Package ($299)" : "Individual ($50/item)",
+      estItems:     activePkg==="ind" ? (document.getElementById("p-ind-items").value||"N/A") : "N/A",
       pickupDate: selPDate, timeSlot: selPSlot,
       dorm:  document.getElementById("p-dorm").value,
       room:  document.getElementById("p-room").value.trim(),
       floor: document.getElementById("p-floor").value.trim(),
-      needsBoxes: document.getElementById("p-needs-boxes") && document.getElementById("p-needs-boxes").checked ? "Yes (+$25)" : "No",
       notes: document.getElementById("p-notes").value.trim(),
     };
   } else {
@@ -978,15 +984,42 @@ async function submitForm(type) {
 }
 
 
-function toggleBoxInfo() {
-  // just visual feedback, value captured in payload
-}
 function finishSubmit(type, payload) {
   localStorage.setItem("tm_submitted_" + type, "1");
+  if (type === "pickup") {
+    localStorage.setItem("tm_pickup_contact", JSON.stringify({
+      firstName: payload.firstName,
+      lastName:  payload.lastName,
+      email:     payload.email,
+      phone:     payload.phone,
+    }));
+  }
   const date = type==="pickup" ? payload.pickupDate : payload.dropoffDate;
   const flowId = type==="pickup"?"pickupFlow":"dropoffFlow";
   document.querySelectorAll("#"+flowId+" .fstep").forEach(s=>s.classList.remove("active"));
   document.getElementById(type+"-ok").classList.add("show");
+}
+
+// ─── AUTOFILL DROP-OFF FROM PICKUP INFO ───────────────────────────────────────
+function prefillDropoffFromPickup() {
+  if (localStorage.getItem("tm_submitted_dropoff")) return; // already booked, nothing to prefill
+  const saved = localStorage.getItem("tm_pickup_contact");
+  if (!saved) return;
+  let info;
+  try { info = JSON.parse(saved); } catch (e) { return; }
+
+  document.getElementById("d-fn").value = info.firstName || "";
+  document.getElementById("d-ln").value = info.lastName  || "";
+  document.getElementById("d-em").value = info.email     || "";
+  document.getElementById("d-ph").value = info.phone     || "";
+
+  // Info is already filled in from the pickup booking, so jump straight to Date & Time.
+  showStep("dropoff", 2);
+}
+
+function goToDropoffTab() {
+  switchTab("dropoff", document.getElementById("tab-dropoff"));
+  document.getElementById("book").scrollIntoView({ behavior: "smooth", block: "start" });
 }
 </script>
 </body>
