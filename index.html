@@ -703,7 +703,298 @@ footer .footer-links a:hover{color:var(--y-mid);}
 <script>
 // ─── CONFIG paste your Google Apps Script Web App URL here ─────────────────
 // If you deploy the Apps Script as a new deployment, replace this with the new /exec URL.
-const SHEET_URL = "https://script.google.com/macros/s/AKfycbxZXeosmm_pQXguJxVYqdq0ApXCsFsG4_bWU7nx1ZPdlekQw3ZtccT3XGyMCHdMJqOKfw/exec";
+const SHEET_URL = "https://script.google.com/macros/s/AKfycbzJaRysZYg73vfziIni7Ifnn761TORu3W70yf34ucrsyGs5HLkg2USf-jCcr5ZO4nP8mQ/exec"
+// TALLYMOVE — Google Apps Script Backend
+// Summer B pickup bookings write to a NEW SHEET TAB named:
+//   "Summer B Move-ins"
+// Fall drop-off bookings write to:
+//   "Fall Drop-offs"
+// ═══════════════════════════════════════════════════════════════════
+//
+// SETUP:
+// 1. sheets.google.com → New spreadsheet → name it "TallyMove Bookings"
+// 2. Extensions → Apps Script → delete all → paste this → Save
+// 3. Deploy → New deployment
+//      Type: Web app
+//      Execute as: Me
+//      Who has access: Anyone
+//    → Deploy → copy URL
+// 4. Paste URL into tallymove_complete.html:
+//      const SHEET_URL = "YOUR_URL_HERE";
+//
+// AFTER EDITING THIS SCRIPT:
+//   Deploy → Manage deployments → pencil icon → Version: New version → Deploy
+//   URL stays the same if you update the same deployment.
+// ═══════════════════════════════════════════════════════════════════
+
+const MAX_PICKUP  = 5;
+const MAX_DROPOFF = 3;
+
+const PICKUP_SHEET_NAME  = "Summer B Move-ins";
+const DROPOFF_SHEET_NAME = "Fall Drop-offs";
+
+// ─── GET: live slot counts ────────────────────────────────────────────────────
+function doGet(e) {
+  const action = e && e.parameter && e.parameter.action;
+
+  if (action === "getCounts") {
+    return getCounts();
+  } else if (action === "getCountsPlain") {
+    return getCountsPlain();
+  }
+
+  return jsonOut({ status: "TallyMove backend live" });
+}
+
+function getCounts() {
+  const ss = SpreadsheetApp.getActiveSpreadsheet();
+  const counts = buildCounts_(ss);
+  return jsonOut({ status: "ok", counts, maxPickup: MAX_PICKUP, maxDropoff: MAX_DROPOFF });
+}
+
+function getCountsPlain() {
+  const ss = SpreadsheetApp.getActiveSpreadsheet();
+  const counts = buildCounts_(ss);
+  const body = JSON.stringify({ status: "ok", counts, maxPickup: MAX_PICKUP, maxDropoff: MAX_DROPOFF });
+  return ContentService.createTextOutput(body).setMimeType(ContentService.MimeType.TEXT);
+}
+
+function buildCounts_(ss) {
+  const counts = {};
+
+  // Summer B pickups / move-ins sheet.
+  const ps = ss.getSheetByName(PICKUP_SHEET_NAME);
+  if (ps && ps.getLastRow() > 2) {
+    ps.getRange(3, 11, ps.getLastRow() - 2, 2).getValues().forEach(row => {
+      const date = normalizeDateLabel_(row[0]);
+      const slot = rawSlot(String(row[1] || ""));
+      if (date && slot) {
+        const k = "pickup_" + date.replace(/\s/g, "") + "_" + slot;
+        counts[k] = (counts[k] || 0) + 1;
+      }
+    });
+  }
+
+  // Fall drop-offs sheet.
+  const ds = ss.getSheetByName(DROPOFF_SHEET_NAME);
+  if (ds && ds.getLastRow() > 2) {
+    ds.getRange(3, 7, ds.getLastRow() - 2, 2).getValues().forEach(row => {
+      const date = normalizeDateLabel_(row[0]);
+      const slot = rawSlot(String(row[1] || ""));
+      if (date && slot) {
+        const k = "dropoff_" + date.replace(/\s/g, "") + "_" + slot;
+        counts[k] = (counts[k] || 0) + 1;
+      }
+    });
+  }
+
+  return counts;
+}
+
+// ─── POST: new booking ───────────────────────────────────────────────────────
+function doPost(e) {
+  try {
+    const ss = SpreadsheetApp.getActiveSpreadsheet();
+
+    // GAS receives text/plain body from the website, so parse JSON from postData.contents.
+    const raw  = e.postData && e.postData.contents ? e.postData.contents : "{}";
+    const data = JSON.parse(raw);
+
+    if (data.type === "pickup") {
+      const cnt = countPickupSlot(ss, data.pickupDate, data.timeSlot);
+      if (cnt >= MAX_PICKUP) return jsonOut({ status: "slot_full" });
+      handlePickup(ss, data);
+    } else if (data.type === "dropoff") {
+      const cnt = countDropoffSlot(ss, data.dropoffDate, data.timeSlot);
+      if (cnt >= MAX_DROPOFF) return jsonOut({ status: "slot_full" });
+      handleDropoff(ss, data);
+    } else {
+      return jsonOut({ status: "error", message: "Unknown booking type." });
+    }
+
+    return jsonOut({ status: "success" });
+  } catch (err) {
+    return jsonOut({ status: "error", message: err.toString() });
+  }
+}
+
+// ─── Slot counters ────────────────────────────────────────────────────────────
+function countPickupSlot(ss, date, slot) {
+  const sheet = ss.getSheetByName(PICKUP_SHEET_NAME);
+  if (!sheet || sheet.getLastRow() < 3) return 0;
+
+  const targetDate = normalizeDateLabel_(date);
+  const targetSlot = rawSlot(String(slot || ""));
+  let n = 0;
+
+  sheet.getRange(3, 11, sheet.getLastRow() - 2, 2).getValues().forEach(row => {
+    if (normalizeDateLabel_(row[0]) === targetDate && rawSlot(String(row[1] || "")) === targetSlot) n++;
+  });
+
+  return n;
+}
+
+function countDropoffSlot(ss, date, slot) {
+  const sheet = ss.getSheetByName(DROPOFF_SHEET_NAME);
+  if (!sheet || sheet.getLastRow() < 3) return 0;
+
+  const targetDate = normalizeDateLabel_(date);
+  const targetSlot = rawSlot(String(slot || ""));
+  let n = 0;
+
+  sheet.getRange(3, 7, sheet.getLastRow() - 2, 2).getValues().forEach(row => {
+    if (normalizeDateLabel_(row[0]) === targetDate && rawSlot(String(row[1] || "")) === targetSlot) n++;
+  });
+
+  return n;
+}
+
+// ─── Write Summer B pickup / move-in row ─────────────────────────────────────
+function handlePickup(ss, data) {
+  let sheet = ss.getSheetByName(PICKUP_SHEET_NAME);
+  if (!sheet) sheet = ss.insertSheet(PICKUP_SHEET_NAME);
+  if (sheet.getLastRow() < 2 || sheet.getRange(2, 1).getValue() !== "Booking #") setupPickupSheet(sheet);
+
+  const num = "SB-" + String(sheet.getLastRow() - 1).padStart(3, "0");
+  const ts  = new Date(data.timestamp || new Date()).toLocaleString("en-US", { timeZone: "America/New_York" });
+
+  sheet.appendRow([
+    num, ts,
+    data.firstName || "", data.lastName || "", data.email || "", data.phone || "",
+    data.pricingPlan || "",
+    data.estBoxes || "—", data.estFurniture || "—", data.estItems || "—",
+    data.pickupDate || "", formatSlot(data.timeSlot),
+    data.dorm || "", data.room || "", data.floor || "",
+    data.needsBoxes || "No", data.notes || "", "Pending"
+  ]);
+
+  const lr = sheet.getLastRow();
+  sheet.getRange(lr, 1, 1, 18).setFontFamily("Arial").setFontSize(10).setVerticalAlignment("middle");
+  if (lr % 2 === 0) sheet.getRange(lr, 1, 1, 18).setBackground("#FFF7D6");
+}
+
+function setupPickupSheet(sheet) {
+  sheet.clear();
+
+  const h = [
+    "Booking #", "Submitted (ET)", "First Name", "Last Name", "Email", "Phone",
+    "Pricing Plan", "Est. Boxes", "Est. Furniture", "Est. Items (Ind.)",
+    "Pickup Date", "Time Slot", "Dorm", "Room #", "Floor", "Needs Boxes (+$25)", "Notes", "Status"
+  ];
+
+  const w = [90, 155, 105, 105, 205, 130, 185, 90, 120, 130, 90, 165, 180, 75, 60, 130, 240, 90];
+
+  sheet.getRange(1, 1, 1, h.length).merge()
+    .setValue("TALLYMOVE — Summer B Move-in Bookings  |  July 30–August 1, 2026")
+    .setBackground("#1A1209").setFontColor("#FFD84D").setFontFamily("Arial")
+    .setFontSize(13).setFontWeight("bold").setHorizontalAlignment("center").setVerticalAlignment("middle");
+
+  sheet.setRowHeight(1, 36);
+
+  sheet.getRange(2, 1, 1, h.length).setValues([h])
+    .setBackground("#F5A800").setFontColor("#FFFFFF").setFontFamily("Arial")
+    .setFontSize(10).setFontWeight("bold").setHorizontalAlignment("center").setVerticalAlignment("middle");
+
+  sheet.setRowHeight(2, 24);
+  w.forEach((v, i) => sheet.setColumnWidth(i + 1, v));
+  sheet.setFrozenRows(2);
+  sheet.getRange(2, 1, 1, h.length).createFilter();
+}
+
+// ─── Write fall drop-off row ─────────────────────────────────────────────────
+function handleDropoff(ss, data) {
+  let sheet = ss.getSheetByName(DROPOFF_SHEET_NAME);
+  if (!sheet) sheet = ss.insertSheet(DROPOFF_SHEET_NAME);
+  if (sheet.getLastRow() < 2 || sheet.getRange(2, 1).getValue() !== "Booking #") setupDropoffSheet(sheet);
+
+  const num = "DO-" + String(sheet.getLastRow() - 1).padStart(3, "0");
+  const ts  = new Date(data.timestamp || new Date()).toLocaleString("en-US", { timeZone: "America/New_York" });
+
+  sheet.appendRow([
+    num, ts,
+    data.firstName || "", data.lastName || "", data.email || "", data.phone || "",
+    data.dropoffDate || "", formatSlot(data.timeSlot),
+    data.dorm || "—", data.room || "—", data.dormFloor || "—",
+    data.address || "—", data.unit || "—", data.aptFloor || "—",
+    data.notes || "", "Pending"
+  ]);
+
+  const lr = sheet.getLastRow();
+  sheet.getRange(lr, 1, 1, 16).setFontFamily("Arial").setFontSize(10).setVerticalAlignment("middle");
+  if (lr % 2 === 0) sheet.getRange(lr, 1, 1, 16).setBackground("#D0E8FF");
+}
+
+function setupDropoffSheet(sheet) {
+  sheet.clear();
+
+  const h = [
+    "Booking #", "Submitted (ET)", "First Name", "Last Name", "Email", "Phone",
+    "Drop-off Date", "Time Slot", "Dorm", "Room #", "Floor (Dorm)",
+    "Apt Address", "Unit #", "Floor (Apt)", "Notes", "Status"
+  ];
+
+  const w = [90, 155, 105, 105, 205, 130, 100, 165, 180, 75, 90, 280, 75, 80, 240, 90];
+
+  sheet.getRange(1, 1, 1, h.length).merge()
+    .setValue("TALLYMOVE — Fall Drop-off Bookings  |  August 19–23, 2026")
+    .setBackground("#1A1209").setFontColor("#FFD84D").setFontFamily("Arial")
+    .setFontSize(13).setFontWeight("bold").setHorizontalAlignment("center").setVerticalAlignment("middle");
+
+  sheet.setRowHeight(1, 36);
+
+  sheet.getRange(2, 1, 1, h.length).setValues([h])
+    .setBackground("#F5A800").setFontColor("#FFFFFF").setFontFamily("Arial")
+    .setFontSize(10).setFontWeight("bold").setHorizontalAlignment("center").setVerticalAlignment("middle");
+
+  sheet.setRowHeight(2, 24);
+  w.forEach((v, i) => sheet.setColumnWidth(i + 1, v));
+  sheet.setFrozenRows(2);
+  sheet.getRange(2, 1, 1, h.length).createFilter();
+}
+
+// ─── Helpers ─────────────────────────────────────────────────────────────────
+function formatSlot(s) {
+  return {
+    morning: "Morning (8am – 11am)",
+    midday: "Midday (12pm – 3pm)",
+    afternoon: "Afternoon (4pm – 7pm)"
+  }[s] || s || "";
+}
+
+function rawSlot(label) {
+  const l = String(label || "").toLowerCase();
+  if (l.includes("morning")) return "morning";
+  if (l.includes("midday")) return "midday";
+  if (l.includes("afternoon")) return "afternoon";
+  return l.trim();
+}
+
+function normalizeDateLabel_(value) {
+  if (!value) return "";
+
+  // If a real Date ever ends up in the sheet, normalize it back to the labels used by the HTML.
+  if (Object.prototype.toString.call(value) === "[object Date]" && !isNaN(value.getTime())) {
+    return Utilities.formatDate(value, "America/New_York", "MMM dd");
+  }
+
+  const s = String(value).trim().replace(/\s+/g, " ");
+  const parts = s.split(" ");
+
+  // HTML sends labels like "Jul 30", "Jul 31", "Aug 01".
+  if (parts.length >= 2) {
+    const month = parts[0];
+    let day = parts[1].replace(/[^0-9]/g, "");
+    if (day.length === 1) day = "0" + day;
+    return month + " " + day;
+  }
+
+  return s;
+}
+
+function jsonOut(obj) {
+  return ContentService.createTextOutput(JSON.stringify(obj)).setMimeType(ContentService.MimeType.JSON);
+}
+";
 
 const PICKUP_DATES  = [{l:"Jul 30",d:"Thu"},{l:"Jul 31",d:"Fri"},{l:"Aug 01",d:"Sat"}];
 const DROPOFF_DATES = [{l:"Aug 19",d:"Wed"},{l:"Aug 20",d:"Thu"},{l:"Aug 21",d:"Fri"},{l:"Aug 22",d:"Sat"},{l:"Aug 23",d:"Sun"}];
