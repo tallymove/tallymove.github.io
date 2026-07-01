@@ -320,10 +320,17 @@ footer .footer-links a:hover{color:var(--y-mid);}
     <div class="sec-label">Transparent pricing</div>
     <div class="sec-title">Three simple options.</div>
     <div class="pricing-grid">
+      <div class="pc">
+        <span class="pc-icon">🪑</span>
+        <h3>Individual Pricing</h3>
+        <span class="pc-amt">$50<small>/item</small></span>
+        <p class="pc-desc">Boxes or furniture <strong style="color:#d4a030;">$50 per item</strong>. Perfect if you only have a few things to store. Same great service, same climate-controlled storage.</p>
+        <p class="pc-note" style="color:#d4a030;border-left-color:#d4a030;">Best for 1 to 3 items</p>
+      </div>
       <div class="pc feat">
         <span class="pc-icon">📦</span>
         <h3>6-Item Package</h3>
-        <span class="pc-amt">$199<small> flat</small></span>
+        <span class="pc-amt">$225<small> flat</small></span>
         <p class="pc-desc">Up to <strong style="color:var(--y-mid);">6 items</strong> any mix of boxes and furniture pieces. Includes pickup, full summer storage in a climate-controlled facility, and fall delivery.</p>
         <p class="pc-note">+ $25 per item beyond 6</p>
       </div>
@@ -334,12 +341,6 @@ footer .footer-links a:hover{color:var(--y-mid);}
         <p class="pc-desc">Up to <strong style="color:#d4a030;">10 items</strong> any mix of boxes and furniture pieces. Includes pickup, full summer storage in a climate-controlled facility, and fall delivery.</p>
         <p class="pc-note" style="color:#d4a030;border-left-color:#d4a030;">+ $25 per item beyond 10</p>
       </div>
-      <div class="pc">
-        <span class="pc-icon">🪑</span>
-        <h3>Individual Pricing</h3>
-        <span class="pc-amt">$50<small>/item</small></span>
-        <p class="pc-desc">Boxes or furniture <strong style="color:#d4a030;">$50 per item</strong>. Perfect if you only have a few things to store. Same great service, same climate-controlled storage.</p>
-        <p class="pc-note" style="color:#d4a030;border-left-color:#d4a030;">Best for 1 to 3 items</p>
       </div>
     </div>
   </div>
@@ -407,23 +408,23 @@ footer .footer-links a:hover{color:var(--y-mid);}
             <div class="sec-tag">Choose your pricing plan</div>
 
             <div class="pkg-toggle">
+              <button class="pkg-btn" id="pkg-ind" onclick="selectPkg('ind')">
+                <span class="pkg-price">$50</span>
+                <span class="pkg-label">Individual / item</span>
+              </button>
               <button class="pkg-btn sel" id="pkg-6" onclick="selectPkg('6')">
-                <span class="pkg-price">$199</span>
+                <span class="pkg-price">$225</span>
                 <span class="pkg-label">6-Item Package</span>
               </button>
               <button class="pkg-btn" id="pkg-10" onclick="selectPkg('10')">
                 <span class="pkg-price">$299</span>
                 <span class="pkg-label">10-Item Package</span>
               </button>
-              <button class="pkg-btn" id="pkg-ind" onclick="selectPkg('ind')">
-                <span class="pkg-price">$50</span>
-                <span class="pkg-label">Individual / item</span>
-              </button>
             </div>
 
             <!-- 6-item detail -->
             <div class="pkg-detail" id="detail-6">
-              <strong>6-Item Package - $199 flat.</strong> Includes any mix of boxes and furniture pieces (up to 6 total), full summer storage, and fall delivery.
+              <strong>6-Item Package - $225 flat.</strong> Includes any mix of boxes and furniture pieces (up to 6 total), full summer storage, and fall delivery.
               <br/><span class="warn">Any items above 6 will be counted on pickup day and billed accordingly at $25 per additional item.</span>
             </div>
 
@@ -443,11 +444,13 @@ footer .footer-links a:hover{color:var(--y-mid);}
             </div>
 
             <hr class="divider"/>
-            <div class="sec-tag">Need boxes?</div>
-            <p style="font-size:.82rem;color:var(--gtxt);line-height:1.6;">
-              <strong>We recommend reusable moving bags</strong> over cardboard boxes. They're nearly the same price, way easier to carry and pack, and since they don't fall apart like cardboard you only have to buy them once.
-              <a href="https://amzn.to/4v4XERQ" target="_blank" rel="noopener" style="color:var(--y-dark);font-weight:700;text-decoration:underline;">Check them out here →</a>
-            </p>
+            <div style="background:var(--y-light);border:2px solid var(--y-deep);border-radius:14px;padding:20px 22px;">
+              <div style="font-size:1.05rem;font-weight:800;color:var(--black);margin-bottom:8px;">📦 Need boxes?</div>
+              <p style="font-size:.95rem;color:var(--black);line-height:1.7;">
+                <strong>We recommend reusable moving bags</strong> over cardboard boxes. They're nearly the same price, way easier to carry and pack, and since they don't fall apart like cardboard you only have to buy them once.
+                <a href="https://amzn.to/4v4XERQ" target="_blank" rel="noopener" style="color:var(--y-dark);font-weight:800;text-decoration:underline;">Check them out here →</a>
+              </p>
+            </div>
 
             <button class="next-btn" onclick="nextStep('pickup',1)">Next → Date &amp; Time</button>
           </div>
@@ -922,7 +925,7 @@ async function submitForm(type) {
       lastName:     document.getElementById("p-ln").value.trim(),
       email:        document.getElementById("p-em").value.trim(),
       phone:        document.getElementById("p-ph").value.trim(),
-      pricingPlan:  activePkg==="6" ? "6-Item Package ($199)" : activePkg==="10" ? "10-Item Package ($299)" : "Individual ($50/item)",
+      pricingPlan:  activePkg==="6" ? "6-Item Package ($225)" : activePkg==="10" ? "10-Item Package ($299)" : "Individual ($50/item)",
       estItems:     activePkg==="ind" ? (document.getElementById("p-ind-items").value||"N/A") : "N/A",
       pickupDate: selPDate, timeSlot: selPSlot,
       dorm:  document.getElementById("p-dorm").value,
