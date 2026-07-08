@@ -445,6 +445,32 @@ footer .footer-links a:hover{color:var(--y-mid);}
 
             <hr class="divider"/>
             <div style="background:var(--y-light);border:2px solid var(--y-deep);border-radius:14px;padding:20px 22px;">
+              <div style="font-size:1.05rem;font-weight:800;color:var(--black);margin-bottom:8px;">🎉 Bring a friend, save $25 each!</div>
+              <p style="font-size:.9rem;color:var(--black);line-height:1.6;margin-bottom:14px;">
+                Did a friend refer you? Enter their name below. Once you both sign up, you'll each get <strong>$25 off</strong> your booking.
+              </p>
+              <div class="fld">
+                <label>Friend's name (optional)</label>
+                <input type="text" id="p-referral" placeholder="e.g. Jamie Smith"/>
+              </div>
+            </div>
+
+            <hr class="divider"/>
+            <div class="sec-tag">How did you hear about us? </div>
+            <div class="fld">
+              <select id="p-heard">
+                <option value="">Select an option</option>
+                <option>Instagram</option>
+                <option>Friend / Word of mouth</option>
+                <option>Flyer on campus</option>
+                <option>Facebook</option>
+                <option>Idk My Parents Did</option>
+                <option>Other</option>
+              </select>
+            </div>
+
+            <hr class="divider"/>
+            <div style="background:var(--y-light);border:2px solid var(--y-deep);border-radius:14px;padding:20px 22px;">
               <div style="font-size:1.05rem;font-weight:800;color:var(--black);margin-bottom:8px;">📦 Need boxes?</div>
               <p style="font-size:.95rem;color:var(--black);line-height:1.7;">
                 <strong>We recommend reusable moving bags</strong> over cardboard boxes. They're nearly the same price, way easier to carry and pack, and since they don't fall apart like cardboard you only have to buy them once.
@@ -928,6 +954,8 @@ async function submitForm(type) {
       phone:        document.getElementById("p-ph").value.trim(),
       pricingPlan:  activePkg==="6" ? "6-Item Package ($225)" : activePkg==="10" ? "10-Item Package ($299)" : "Individual ($50/item)",
       estItems:     activePkg==="ind" ? (document.getElementById("p-ind-items").value||"N/A") : "N/A",
+      referredBy:   document.getElementById("p-referral").value.trim(),
+      howHeard:     document.getElementById("p-heard").value,
       pickupDate: selPDate, timeSlot: selPSlot,
       dorm:  document.getElementById("p-dorm").value,
       room:  document.getElementById("p-room").value.trim(),
